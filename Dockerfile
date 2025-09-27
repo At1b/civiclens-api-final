@@ -29,4 +29,4 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8081
 
 # The command to run the application when the container starts
-CMD ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "printenv && java -jar app.jar"]
