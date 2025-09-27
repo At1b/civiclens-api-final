@@ -29,7 +29,7 @@ public class GrievanceService {
     private AiCategorizationService aiCategorizationService;
     @Autowired
     private SimpMessagingTemplate messagingTemplate; // Inject the template
-    @Autowired
+    @Autowired(required = false)
     private EmailService emailService;
     @Autowired(required = false) // Set to not required, so the app can start without it
     private GrievanceSearchRepository grievanceSearchRepository;
@@ -130,7 +130,7 @@ public class GrievanceService {
         // --- EMAIL NOTIFICATION LOGIC STARTS HERE ---
 
         // 5. If the new status is "Resolved", send an email
-        if ("Resolved".equalsIgnoreCase(newStatus)) {
+        if (emailService != null && "Resolved".equalsIgnoreCase(newStatus)) {
             String to = grievance.getSubmittedBy().getEmail();
             String subject = "Your Grievance Has Been Resolved! [ID: " + grievance.getId() + "]";
             String text = "Dear Citizen,\n\nWe are pleased to inform you that your grievance regarding '"
